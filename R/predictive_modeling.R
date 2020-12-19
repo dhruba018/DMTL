@@ -17,6 +17,10 @@
 #' Defaults to `NULL`.
 #' @param ... Other options relevant for RF modeling.
 #'
+#' @keywords random-forest decision-tree
+#' @export
+#' @examples
+#'
 ##
 ## Dependency: randomForest
 ## Dependency_own: lambda_functions

@@ -41,3 +41,8 @@ This function trains a Random Forest regressor using the training data
 provided and predict response for the test features. Depends on the
 \code{randomForest} package.
 }
+\examples{
+
+}
+\keyword{decision-tree}
+\keyword{random-forest}
