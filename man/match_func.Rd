@@ -2,9 +2,9 @@
 % Please edit documentation in R/dist_match.R
 \name{match_func}
 \alias{match_func}
-\title{Estimate inverse function mapping}
+\title{Estimate Inverse Map}
 \usage{
-match_func(knots, vals, new_vals, lims)
+match_func(knots, vals, new_vals, lims, get_func = FALSE)
 }
 \arguments{
 \item{knots}{Vector containing knots for the distribution estimate.}
@@ -12,14 +12,33 @@ match_func(knots, vals, new_vals, lims)
 \item{vals}{Vector containing distribution values corresponding to the knots.}
 
 \item{new_vals}{Vector containing distribution values for which the knots
-are unknown.}
+are unknown. If missing, \code{match_func()} simply returns the map function.}
 
-\item{lims}{Vector giving the range for the knot values. If missing, these
-values are estimated from the given knots.}
+\item{lims}{Vector providing the range of the knot values for mapping.
+If missing, these values are estimated from the given knots.}
+
+\item{get_func}{Flag for returning the map function if \code{new_vals} is
+provided. If \code{TRUE}, returns a named list with two components-  \code{mapped}
+and \code{func} (mapped knots for \code{new_vals} and the mapping function,
+respectively). Defaults to \code{FALSE}.}
 }
 \description{
-This function estimates an inverse map for a distribution estimate from its
-knots and value sets, and calculates corresponding knots for new values
-assumed to be from the distribution.
+This function estimates an inverse map \eqn{g} for a given set of knots
+(input) and values (output) corresponding to a certain map \eqn{f} \emph{i.e.},
+given \eqn{x, y | f: x --> y}, \code{match_func()} estimates \eqn{g: y --> x}
+using linear interpolation.
+}
+\examples{
+set.seed(654321)
+x <- rnorm(100, 1, 0.5)
+F <- ecdf(x)
+fval <- F(x)
+map <- match_func(knots = x, vals = fval)
+
+x2 <- rnorm(20, 0.8, 0.5)
+F2 <- ecdf(x2)
+fval2 <- F2(x2)
+matched <- match_func(knots = x, vals = fval, new_vals = fval2)
+
 }
 \keyword{inverse-map}

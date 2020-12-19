@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimate_cdf.R
 \name{estimate_cdf}
 \alias{estimate_cdf}
-\title{Estimate cumulative distribution}
+\title{Estimate Cumulative Distribution}
 \usage{
 estimate_cdf(
   x,
@@ -56,4 +56,5 @@ x_kde_cdf <- estimate_cdf(x, density = TRUE, unit_range = TRUE)
 
 }
 \keyword{CDF}
+\keyword{KDE}
 \keyword{cumulative-distribution}

@@ -1,4 +1,4 @@
-#' Estimate cumulative distribution
+#' Estimate Cumulative Distribution
 #'
 #' This function estimates the values of the cumulative distribution function
 #' (CDF) for a vector.
@@ -22,37 +22,39 @@
 #' Defaults to `NULL`.
 #' @param ... Other options relevant for distribution estimation.
 #'
-#' @keywords cumulative-distribution CDF
+#' @keywords cumulative-distribution CDF KDE
 #' @export
 #' @examples
 #' x <- runif(100)
 #' x_hist_cdf <- estimate_cdf(x, samples = 1000, unit_range = TRUE)
 #' x_kde_cdf <- estimate_cdf(x, density = TRUE, unit_range = TRUE)
 #'
+##
+## Dependency: stats, ks
 ################################################################################
 
-estimate_cdf <- function(x, bootstrap = TRUE, samples = 1e6, density = FALSE, binned = TRUE,
-                         grids = 1e4, unit_range = FALSE, seed = NULL, ...) {
+estimate_cdf <- function(x, bootstrap = TRUE, samples = 1e6, density = FALSE, binned = TRUE, grids = 1e4,
+                         unit_range = FALSE, seed = NULL, ...) {
 
 
     ## Bootstrapping & data range...
     set.seed(seed)                              # For reproducibility
-    xx <- if (bootstrap) sample(x, size = samples, replace = TRUE) else x
-    x_range <- if (unit_range) c(0, 1) else range(x)
+    xx   <- if (bootstrap) sample(x, size = samples, replace = TRUE) else x
+    lims <- if (unit_range) c(0, 1) else range(x)
 
 
     ## Calculate cumulative distribution...
     if (density) {                              # Use kernel density
+
+        ## Estimate KDE bandwidth...
         bw <- ks::hscv(x, nstage = 2, binned = TRUE, bgridsize = grids * 10)
 
         x_cdf <- if (binned) {
             ## Binned estimate for faster computation...
-            ks::kcde(xx, h = bw, binned = TRUE, bgridsize = grids,
-                     xmin = x_range[1], xmax = x_range[2], ...)
+            ks::kcde(xx, h = bw, binned = TRUE, bgridsize = grids, xmin = lims[1], xmax = lims[2], ...)
         } else {
             ## Continuous estimate for increased accuracy...
-            ks::kcde(xx, h = bw, binned = FALSE, gridsize = grids / 10,
-                     xmin = x_range[1], xmax = x_range[2], ...)
+            ks::kcde(xx, h = bw, binned = FALSE, gridsize = grids / 10, xmin = lims[1], xmax = lims[2], ...)
         }
     }
 

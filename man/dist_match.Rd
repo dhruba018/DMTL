@@ -2,7 +2,7 @@
 % Please edit documentation in R/dist_match.R
 \name{dist_match}
 \alias{dist_match}
-\title{Perform distribution matching for source and reference datasets}
+\title{Distribution Matching for Source and Reference Datasets}
 \usage{
 dist_match(
   src,
@@ -43,7 +43,8 @@ Defaults to \code{NULL}.}
 This function matches the source distribution to a reference distribution
 so that the source data can effectively transferred to the reference space.
 }
-\keyword{density-matching}
+\examples{
+
+}
 \keyword{distribution-matching}
 \keyword{domain-transfer}
-\keyword{histogram-matching}
