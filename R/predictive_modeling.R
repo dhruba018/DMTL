@@ -6,12 +6,6 @@
 
 RF_predict <- function(x_train, y_train, x_test, y_lims, n_tree = 300, m_try = 0.3333, random_seed = NULL, ...) {
 
-    # source("lambda_functions.R")
-
-    ## Initital checks...
-    # if (!require(randomForest))                 # Load package
-    #     library(randomForest)
-
     if (missing(y_lims))
         y_lims <- c(min(y_train), max(y_train))
 

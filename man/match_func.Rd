@@ -2,7 +2,7 @@
 % Please edit documentation in R/dist_match.R
 \name{match_func}
 \alias{match_func}
-\title{Estimate Inverse Map}
+\title{Estimate Inverse Mapping}
 \usage{
 match_func(knots, vals, new_vals, lims, get_func = FALSE)
 }
@@ -14,12 +14,12 @@ match_func(knots, vals, new_vals, lims, get_func = FALSE)
 \item{new_vals}{Vector containing distribution values for which the knots
 are unknown. If missing, \code{match_func()} simply returns the map function.}
 
-\item{lims}{Vector providing the range of the knot values for mapping.
-If missing, these values are estimated from the given knots.}
+\item{lims}{Vector providing the range of the knot values for mapping. If
+missing, these values are estimated from the given knots.}
 
 \item{get_func}{Flag for returning the map function if \code{new_vals} is
-provided. If \code{TRUE}, returns a named list with two components-  \code{mapped}
-and \code{func} (mapped knots for \code{new_vals} and the mapping function,
+provided. If \code{TRUE}, \code{match_func()} returns a named list with two components-
+\code{mapped} and \code{func} (mapped knots for \code{new_vals} and the mapping function,
 respectively). Defaults to \code{FALSE}.}
 }
 \description{
@@ -41,4 +41,5 @@ fval2 <- F2(x2)
 matched <- match_func(knots = x, vals = fval, new_vals = fval2)
 
 }
+\keyword{function-approximation}
 \keyword{inverse-map}

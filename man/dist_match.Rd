@@ -21,17 +21,17 @@ dist_match(
 \item{ref}{Vector containing the reference data to estimate the reference
 distribution for matching.}
 
-\item{src_dist}{Estimation of the source distribution. If missing, it is
-estimated from the provided source data.}
+\item{src_dist}{Vector containing source distribution values. If missing,
+these values are estimated from the source data using \code{estimate_cdf()}.}
 
-\item{ref_dist}{Estimation of the reference distribution. If missing, it is
-estimated from the provided reference data.}
+\item{ref_dist}{Vector containing reference distribution values. If missing,
+these values are estimated from the reference data using \code{estimate_cdf()}.}
 
-\item{lims}{Vector giving the range for the knot values. If missing, these
-values are estimated from the given source data.}
+\item{lims}{Vector providing the range of the knot values for mapping. If
+missing, these values are estimated from the reference data.}
 
-\item{density}{Flag for using kernel density estimates for matching
-distributions instead of histogram counts. Defaults to \code{False}.}
+\item{density}{Flag for using kernel density estimates for matching instead
+of histogram counts. Defaults to \code{False}.}
 
 \item{samples}{Sample size for estimating distributions if \code{src_dist} and/or
 \code{ref_dist} are missing. Defaults to \code{1e6}.}
@@ -40,10 +40,15 @@ distributions instead of histogram counts. Defaults to \code{False}.}
 Defaults to \code{NULL}.}
 }
 \description{
-This function matches the source distribution to a reference distribution
-so that the source data can effectively transferred to the reference space.
+This function matches a source distribution to a given reference distribution
+such that the data in the source space can effectively be transferred to the
+reference space \emph{i.e.} domain transfer \emph{via} distribution matching.
 }
 \examples{
+set.seed(7531)
+x1 <- rnorm(100, 0.2, 0.6)
+x2 <- runif(200)
+matched <- dist_match(src = x1, ref = x2, lims = c(0, 1))
 
 }
 \keyword{distribution-matching}

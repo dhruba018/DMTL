@@ -1,4 +1,4 @@
-#' Estimate Inverse Map
+#' Estimate Inverse Mapping
 #'
 #' This function estimates an inverse map \eqn{g} for a given set of knots
 #' (input) and values (output) corresponding to a certain map \eqn{f} _i.e._,
@@ -9,14 +9,14 @@
 #' @param vals Vector containing distribution values corresponding to the knots.
 #' @param new_vals Vector containing distribution values for which the knots
 #' are unknown. If missing, `match_func()` simply returns the map function.
-#' @param lims Vector providing the range of the knot values for mapping.
-#' If missing, these values are estimated from the given knots.
+#' @param lims Vector providing the range of the knot values for mapping. If
+#' missing, these values are estimated from the given knots.
 #' @param get_func Flag for returning the map function if `new_vals` is
-#' provided. If `TRUE`, returns a named list with two components-  `mapped`
-#' and `func` (mapped knots for `new_vals` and the mapping function,
+#' provided. If `TRUE`, `match_func()` returns a named list with two components-
+#' `mapped` and `func` (mapped knots for `new_vals` and the mapping function,
 #' respectively). Defaults to `FALSE`.
 #'
-#' @keywords inverse-map
+#' @keywords inverse-map function-approximation
 #' @export
 #' @examples
 #' set.seed(654321)
@@ -62,20 +62,21 @@ match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
 
 #' Distribution Matching for Source and Reference Datasets
 #'
-#' This function matches the source distribution to a reference distribution
-#' so that the source data can effectively transferred to the reference space.
+#' This function matches a source distribution to a given reference distribution
+#' such that the data in the source space can effectively be transferred to the
+#' reference space _i.e._ domain transfer _via_ distribution matching.
 #'
 #' @param src Vector containing the source data to be matched.
 #' @param ref Vector containing the reference data to estimate the reference
 #' distribution for matching.
-#' @param src_dist Estimation of the source distribution. If missing, it is
-#' estimated from the provided source data.
-#' @param ref_dist Estimation of the reference distribution. If missing, it is
-#' estimated from the provided reference data.
-#' @param lims Vector giving the range for the knot values. If missing, these
-#' values are estimated from the given source data.
-#' @param density Flag for using kernel density estimates for matching
-#' distributions instead of histogram counts. Defaults to `False`.
+#' @param src_dist Vector containing source distribution values. If missing,
+#' these values are estimated from the source data using `estimate_cdf()`.
+#' @param ref_dist Vector containing reference distribution values. If missing,
+#' these values are estimated from the reference data using `estimate_cdf()`.
+#' @param lims Vector providing the range of the knot values for mapping. If
+#' missing, these values are estimated from the reference data.
+#' @param density Flag for using kernel density estimates for matching instead
+#' of histogram counts. Defaults to `False`.
 #' @param samples Sample size for estimating distributions if `src_dist` and/or
 #' `ref_dist` are missing. Defaults to `1e6`.
 #' @param seed Seed for random number generator (for reproducible outcomes).
@@ -84,6 +85,10 @@ match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
 #' @keywords distribution-matching domain-transfer
 #' @export
 #' @examples
+#' set.seed(7531)
+#' x1 <- rnorm(100, 0.2, 0.6)
+#' x2 <- runif(200)
+#' matched <- dist_match(src = x1, ref = x2, lims = c(0, 1))
 #'
 ##
 ## Dependency: stats, ks
@@ -116,7 +121,8 @@ dist_match <- function(src, ref, src_dist, ref_dist, lims, density = FALSE, samp
 
   ## Perform mapping...
   if (missing(lims))
-    lims <- range(src)
+    lims <- range(ref)
+    # lims <- range(src)
 
   matched <- match_func(knots = kn_vals, vals = fn_vals, new_vals = vals_to_match, lims)
   matched
