@@ -14,14 +14,14 @@ DMTL(
 )
 }
 \arguments{
-\item{target_set}{List containing the target datasets. A named list with two
-components- \code{x} (features) and \code{y} (response). These two sets do not need to
-be matched and the response values are only used to estimate distribution
-while the corresponding response values for the features are predicted.}
+\item{target_set}{List containing the target datasets. A named list with
+components \code{X} (features) and \code{y} (response). The predictions are performed
+to estimate the response values corresponding to \code{X} while \code{y} is only used
+to estimate the response distribution parameters.}
 
-\item{source_set}{List containing the source datasets. A named list with two
-components- \code{x} (features) and \code{y} (response). These two sets must be matched
-and used in both distribution estimation and training a predictive model.}
+\item{source_set}{List containing the source datasets. A named list with
+components \code{X} (features) and \code{y} (response). These two sets must be matched
+and used in both distribution estimation and predictive modeling.}
 
 \item{use_density}{Flag for using kernel density as distribution estimate
 instead of histogram counts. Defaults to \code{FALSE}.}
@@ -57,9 +57,11 @@ this function needs an \strong{unmatched} pair of target datasets (features and
 response values) and a \strong{matched} pair of source datasets.
 }
 \note{
-The data in \code{target_set} (\emph{i.e.}, \code{x} and \code{y}) do not need to have the
-same number of samples (\emph{i.e.} rows). In contrast, the data in \code{source_set}
-(\emph{i.e.}, \code{x} and \code{y}) must have matched samples.
+The datasets in \code{target_set} (\emph{i.e.}, \code{X} and \code{y}) do not need to be
+matched (\emph{i.e.}, have the same number of rows) since the response values are
+used only to estimate distribution for mapping while the feature values are
+used for both mapping and final prediction. In contrast, the datasets in
+\code{source_set} (\emph{i.e.}, \code{X} and \code{y}) must have matched samples.
 }
 \examples{
 

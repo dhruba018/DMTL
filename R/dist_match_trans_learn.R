@@ -11,13 +11,13 @@
 #' this function needs an **unmatched** pair of target datasets (features and
 #' response values) and a **matched** pair of source datasets.
 #'
-#' @param target_set List containing the target datasets. A named list with two
-#' components- `x` (features) and `y` (response). These two sets do not need to
-#' be matched and the response values are only used to estimate distribution
-#' while the corresponding response values for the features are predicted.
-#' @param source_set List containing the source datasets. A named list with two
-#' components- `x` (features) and `y` (response). These two sets must be matched
-#' and used in both distribution estimation and training a predictive model.
+#' @param target_set List containing the target datasets. A named list with
+#' components `X` (features) and `y` (response). The predictions are performed
+#' to estimate the response values corresponding to `X` while `y` is only used
+#' to estimate the response distribution parameters.
+#' @param source_set List containing the source datasets. A named list with
+#' components `X` (features) and `y` (response). These two sets must be matched
+#' and used in both distribution estimation and predictive modeling.
 #' @param use_density Flag for using kernel density as distribution estimate
 #' instead of histogram counts. Defaults to `FALSE`.
 #' @param sample_size Sample size for estimating distributions of target and
@@ -29,18 +29,21 @@
 #' `source` (predictions in the target space and source space, respectively).
 #' Defaults to `FALSE`.
 #'
-#' @note The data in `target_set` (_i.e._, `x` and `y`) do not need to have the
-#' same number of samples (_i.e._ rows). In contrast, the data in `source_set`
-#' (_i.e._, `x` and `y`) must have matched samples.
-#'
 #' @return
-#' If `all_pred = FALSE`, a vector containing the final predictions.
+#' If `all_pred = FALSE`, a vector containing the final prediction values.
 #'
 #' If `all_pred = TRUE`, a named list with two components `target` and `source`
 #' _i.e._, predictions in the original target space and in source space,
 #' respectively.
 #'
+#' @note The datasets in `target_set` (_i.e._, `X` and `y`) do not need to be
+#' matched (_i.e._, have the same number of rows) since the response values are
+#' used only to estimate distribution for mapping while the feature values are
+#' used for both mapping and final prediction. In contrast, the datasets in
+#' `source_set` (_i.e._, `X` and `y`) must have matched samples.
+#'
 #' @keywords distribution-matching transfer-learning domain-transfer
+#' histogram-matching density-matching
 #' @export
 #' @examples
 #'
