@@ -22,7 +22,16 @@
 #' Defaults to `NULL`.
 #' @param ... Other options relevant for distribution estimation.
 #'
-#' @keywords cumulative-distribution CDF KDE
+#' @return
+#' If `density = FALSE`, a function of class `ecdf`, inheriting from the
+#' `stepfun` class, and hence inheriting a `knots()` method.
+#'
+#' If `density = TRUE`, an object of class `kcde` which has the fields
+#' `eval.points` and `estimate` necessary for calculating a map.
+#'
+#'
+#' @keywords cumulative-distribution CDF cumulative-histogram kernel-density
+#' kernel-density-estimate KDE kernel-CDF
 #' @export
 #' @examples
 #' x <- runif(100)

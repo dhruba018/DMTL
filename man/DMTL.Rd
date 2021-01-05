@@ -37,6 +37,13 @@ If \code{TRUE}, \code{DMTL()} returns a named list with two components- \code{ta
 \code{source} (predictions in the target space and source space, respectively).
 Defaults to \code{FALSE}.}
 }
+\value{
+If \code{all_pred = FALSE}, a vector containing the final predictions.
+
+If \code{all_pred = TRUE}, a named list with two components \code{target} and \code{source}
+\emph{i.e.}, predictions in the original target space and in source space,
+respectively.
+}
 \description{
 This function performs distribution matching based transfer learning (DMTL)
 regression for given target (primary) and source (secondary) datasets. The
@@ -48,6 +55,11 @@ aforementioned predictive model. The response values are then transferred to
 the original target space by applying distribution matching again. Hence,
 this function needs an \strong{unmatched} pair of target datasets (features and
 response values) and a \strong{matched} pair of source datasets.
+}
+\note{
+The data in \code{target_set} (\emph{i.e.}, \code{x} and \code{y}) do not need to have the
+same number of samples (\emph{i.e.} rows). In contrast, the data in \code{source_set}
+(\emph{i.e.}, \code{x} and \code{y}) must have matched samples.
 }
 \examples{
 

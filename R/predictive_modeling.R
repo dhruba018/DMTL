@@ -12,17 +12,18 @@
 #' @param n_tree Number of decision trees to be built in the forest. Defaults
 #' to `300`.
 #' @param m_try Fraction of the features to be used for building each tree.
-#' Defaults to 0.3333 (or 33.33%).
+#' Defaults to `0.3333` (or 33.33%).
 #' @param seed Seed for random number generator (for reproducible outcomes).
 #' Defaults to `NULL`.
 #' @param ... Other options relevant for RF modeling.
 #'
+#' @return Predicted values for `x_test` using the RF regressor.
+#'
 #' @keywords random-forest decision-tree
 #' @export
-#' @examples=
 #'
 
-## Dependency: randomForest
+## Dependency: stats, randomForest
 ## Dependency_own: lambda_functions
 ##
 ## Author: SR Dhruba, Dec 2020
@@ -42,7 +43,7 @@ RF_predict <- function(x_train, y_train, x_test, lims, n_tree = 300, m_try = 0.3
 
     set.seed(seed)                       # For reproducibility
     Forest <- randomForest::randomForest(x = x_train, y = y_train, ntree = n_tree, mtry = m_try, replace = TRUE, ...)
-    y_pred <- confined(predict(Forest, x_test), lims)
+    y_pred <- confined(stats::predict(Forest, x_test), lims)
 
     y_pred
 
@@ -51,7 +52,7 @@ RF_predict <- function(x_train, y_train, x_test, lims, n_tree = 300, m_try = 0.3
 
 ################################################################################
 
-## Dependency:
+## Dependency: stats, e1071
 ## Dependency_own: lambda_functions
 ##
 ## Author: SR Dhruba, Dec 2020
@@ -72,7 +73,7 @@ SVM_predict <- function(x_train, y_train, x_test, lims,
 
     set.seed(seed)                       # For reproducibility
     Forest <- randomForest::randomForest(x = x_train, y = y_train, ntree = n_tree, mtry = m_try, replace = TRUE, ...)
-    y_pred <- confined(predict(Forest, x_test), lims)
+    y_pred <- confined(stats::predict(Forest, x_test), lims)
 
     y_pred
 

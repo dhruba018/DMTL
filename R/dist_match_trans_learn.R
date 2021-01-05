@@ -29,6 +29,17 @@
 #' `source` (predictions in the target space and source space, respectively).
 #' Defaults to `FALSE`.
 #'
+#' @note The data in `target_set` (_i.e._, `x` and `y`) do not need to have the
+#' same number of samples (_i.e._ rows). In contrast, the data in `source_set`
+#' (_i.e._, `x` and `y`) must have matched samples.
+#'
+#' @return
+#' If `all_pred = FALSE`, a vector containing the final predictions.
+#'
+#' If `all_pred = TRUE`, a named list with two components `target` and `source`
+#' _i.e._, predictions in the original target space and in source space,
+#' respectively.
+#'
 #' @keywords distribution-matching transfer-learning domain-transfer
 #' @export
 #' @examples
@@ -65,20 +76,14 @@ DMTL <- function(target_set, source_set, use_density = FALSE, sample_size = 1e3,
 
     ## Distribution matching for predictors...
     X2_map <- lapply(1:n_feat, function(j) {
-        # dist_match(X1[, j], ref = X2[, j], match_method = method, samp_size = size, lims = data_lims, rand_seed = seed)
         dist_match(X1[, j], ref = X2[, j], density = use_density, lims = data_lims, samples = sample_size, seed = random_seed)
         })
     X2_map <- as.data.frame(X2_map);    dimnames(X2_map) <- dimnames(X1)
-    # rownames(X2_map) <- rownames(X1);   colnames(X2_map) <- colnames(X1)
 
 
     ## Perform prediction & map back to original space...
     y2_pred_map <- RF_predict(x_train = X2, y_train = y2, x_test = X2_map, lims = data_lims,
                               n_tree = 200, m_try = 0.4, seed = random_seed)
-    # y2_cdf  <- get_dist_est(y2, sample_size = size, x_range = "unit", dist_method = method, grid_size = 1e3, random_seed = seed)
-    #
-    # y1_pred <- dist_match(y2_pred_map, ref = y1, src_dist = y2_cdf, match_method = method, samp_size = size,
-    #                       lims = data_lims, rand_seed = seed)
     y2_cdf  <- estimate_cdf(y2, samples = sample_size, unit_range = TRUE, density = use_density, grids = 1e3, seed = random_seed)
 
     y1_pred <- dist_match(y2_pred_map, ref = y1, src_cdf = y2_cdf, density = use_density, samples = sample_size,

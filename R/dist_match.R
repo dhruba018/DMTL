@@ -16,6 +16,17 @@
 #' `mapped` and `func` (mapped knots for `new_vals` and the mapping function,
 #' respectively). Defaults to `FALSE`.
 #'
+#' @return
+#' If `new_vals` is missing, a function performing interpolation
+#' (linear or constant) of the given data points.
+#'
+#' If `get_func = FALSE`, a vector containing the matched knots that will
+#' produce `new_vals` for the map \eqn{f}.
+#'
+#' If `get_func = TRUE`, a named list with two components- `mapped` and `func`
+#' (mapped knots for `new_vals` and the mapping function, respectively).
+#'
+#'
 #' @keywords inverse-map function-approximation
 #' @export
 #' @examples
@@ -84,6 +95,8 @@ match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
 #' @param seed Seed for random number generator (for reproducible outcomes).
 #' Defaults to `NULL`.
 #'
+#' @return A vector containing the matched values corresponding to `src`.
+#'
 #' @keywords distribution-matching domain-transfer
 #' @export
 #' @examples
@@ -113,12 +126,12 @@ dist_match <- function(src, ref, src_cdf, ref_cdf, lims, density = FALSE, sample
 
   ## Mapping parameters...
   if (density) {                        # Using kernel density
-    kn_vals <- ref_cdf$eval.points;        fn_vals <- ref_cdf$estimate
-    vals_to_match <- predict(src_cdf, x = src)
+    kn_vals <- ref_cdf$eval.points;         fn_vals <- ref_cdf$estimate
+    vals_to_match <- stats::predict(src_cdf, x = src)
   }
 
   else {                                # Using histogram
-    kn_vals <- knots(ref_cdf);             fn_vals <- ref_cdf(kn_vals)
+    kn_vals <- stats::knots(ref_cdf);       fn_vals <- ref_cdf(kn_vals)
     vals_to_match <- src_cdf(src)
   }
 
@@ -126,7 +139,6 @@ dist_match <- function(src, ref, src_cdf, ref_cdf, lims, density = FALSE, sample
   ## Perform mapping...
   if (missing(lims))
     lims <- range(ref)
-    # lims <- range(src)
 
   matched <- match_func(knots = kn_vals, vals = fn_vals, new_vals = vals_to_match, lims)
   matched

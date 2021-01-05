@@ -29,20 +29,20 @@ If missing, these values are estimated from the training response.}
 to \code{300}.}
 
 \item{m_try}{Fraction of the features to be used for building each tree.
-Defaults to 0.3333 (or 33.33\%).}
+Defaults to \code{0.3333} (or 33.33\%).}
 
 \item{seed}{Seed for random number generator (for reproducible outcomes).
 Defaults to \code{NULL}.}
 
 \item{...}{Other options relevant for RF modeling.}
 }
+\value{
+Predicted values for \code{x_test} using the RF regressor.
+}
 \description{
 This function trains a Random Forest regressor using the training data
 provided and predict response for the test features. Depends on the
 \code{randomForest} package.
-}
-\examples{
-
 }
 \keyword{decision-tree}
 \keyword{random-forest}
