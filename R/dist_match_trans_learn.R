@@ -33,11 +33,12 @@
 #' @export
 #' @examples
 #'
+
+## Dependency: stats, ks
+## Dependency_own: lambda_functions, estimate_cdf, dist_match,
+##                  predictive_modeling
 ##
-## Dependency: stats, ks, randomForest
-## Dependency_own: lambda_functions, get_dist_est, dist_match, RF_predict
-##
-## Author: SR Dhruba, Nov 2020
+## Author: SR Dhruba, Dec 2020
 ################################################################################
 
 DMTL <- function(target_set, source_set, use_density = FALSE, sample_size = 1e3, random_seed = NULL, all_pred = FALSE) {

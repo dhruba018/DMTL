@@ -29,8 +29,10 @@
 #' x_hist_cdf <- estimate_cdf(x, samples = 1000, unit_range = TRUE)
 #' x_kde_cdf <- estimate_cdf(x, density = TRUE, unit_range = TRUE)
 #'
-##
+
 ## Dependency: stats, ks
+##
+## Author: SR Dhruba, Dec 2020
 ################################################################################
 
 estimate_cdf <- function(x, bootstrap = TRUE, samples = 1e6, density = FALSE, binned = TRUE, grids = 1e4,

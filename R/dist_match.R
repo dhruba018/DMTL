@@ -30,9 +30,11 @@
 #' fval2 <- F2(x2)
 #' matched <- match_func(knots = x, vals = fval, new_vals = fval2)
 #'
-##
+
 ## Dependency: stats, ks
 ## Dependency_own: lambda_functions
+##
+## Author: SR Dhruba, Dec 2020
 ################################################################################
 
 
@@ -90,9 +92,11 @@ match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
 #' x2 <- runif(200)
 #' matched <- dist_match(src = x1, ref = x2, lims = c(0, 1))
 #'
-##
+
 ## Dependency: stats, ks
 ## Dependency_own: lambda_functions, match_func
+##
+## Author: SR Dhruba, Dec 2020
 ################################################################################
 
 
