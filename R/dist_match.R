@@ -69,16 +69,16 @@ match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
 #' @param src Vector containing the source data to be matched.
 #' @param ref Vector containing the reference data to estimate the reference
 #' distribution for matching.
-#' @param src_dist Vector containing source distribution values. If missing,
+#' @param src_cdf Vector containing source distribution values. If missing,
 #' these values are estimated from the source data using `estimate_cdf()`.
-#' @param ref_dist Vector containing reference distribution values. If missing,
+#' @param ref_cdf Vector containing reference distribution values. If missing,
 #' these values are estimated from the reference data using `estimate_cdf()`.
 #' @param lims Vector providing the range of the knot values for mapping. If
 #' missing, these values are estimated from the reference data.
 #' @param density Flag for using kernel density estimates for matching instead
 #' of histogram counts. Defaults to `False`.
-#' @param samples Sample size for estimating distributions if `src_dist` and/or
-#' `ref_dist` are missing. Defaults to `1e6`.
+#' @param samples Sample size for estimating distributions if `src_cdf` and/or
+#' `ref_cdf` are missing. Defaults to `1e6`.
 #' @param seed Seed for random number generator (for reproducible outcomes).
 #' Defaults to `NULL`.
 #'
@@ -97,25 +97,25 @@ match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
 
 
 ## Distribution matching for two CDFs...
-dist_match <- function(src, ref, src_dist, ref_dist, lims, density = FALSE, samples = 1e6, seed = NULL) {
+dist_match <- function(src, ref, src_cdf, ref_cdf, lims, density = FALSE, samples = 1e6, seed = NULL) {
 
   ## Get distributions...
-  if (missing(ref_dist))
+  if (missing(ref_cdf))
     ref_cdf <- estimate_cdf(ref, bootstrap = TRUE, samples, density, binned = TRUE, grids = 1e3, unit_range = TRUE, seed)
 
-  if (missing(src_dist))
+  if (missing(src_cdf))
     src_cdf <- estimate_cdf(src, bootstrap = TRUE, samples, density, binned = TRUE, grids = 1e3, unit_range = TRUE, seed)
 
 
   ## Mapping parameters...
   if (density) {                        # Using kernel density
-    kn_vals <- ref_dist$eval.points;        fn_vals <- ref_dist$estimate
-    vals_to_match <- predict(src_dist, x = src)
+    kn_vals <- ref_cdf$eval.points;        fn_vals <- ref_cdf$estimate
+    vals_to_match <- predict(src_cdf, x = src)
   }
 
   else {                                # Using histogram
-    kn_vals <- knots(ref_dist);             fn_vals <- ref_dist(kn_vals)
-    vals_to_match <- src_dist(src)
+    kn_vals <- knots(ref_cdf);             fn_vals <- ref_cdf(kn_vals)
+    vals_to_match <- src_cdf(src)
   }
 
 

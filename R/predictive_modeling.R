@@ -19,7 +19,7 @@
 #'
 #' @keywords random-forest decision-tree
 #' @export
-#' @examples
+#' @examples=
 #'
 ##
 ## Dependency: randomForest
@@ -36,9 +36,36 @@ RF_predict <- function(x_train, y_train, x_test, lims, n_tree = 300, m_try = 0.3
 
 
     ## Define model & perform prediction...
-    set.seed(seed)                       # For reproducibility
     m_try  <- round(m_try * ncol(x_train))
 
+    set.seed(seed)                       # For reproducibility
+    Forest <- randomForest::randomForest(x = x_train, y = y_train, ntree = n_tree, mtry = m_try, replace = TRUE, ...)
+    y_pred <- confined(predict(Forest, x_test), lims)
+
+    y_pred
+
+}
+
+
+##
+## Dependency:
+## Dependency_own: lambda_functions
+################################################################################
+
+SVM_predict <- function(x_train, y_train, x_test, lims,
+                        n_tree = 300, m_try = 0.3333, seed = NULL, ...) {
+
+    if (missing(lims))
+        lims <- range(y_train)
+
+    if (m_try > 1 | m_try < 0)
+        stop("Invalid value! Please choose a value between 0 and 1 (fraction of the features)!")
+
+
+    ## Define model & perform prediction...
+    m_try  <- round(m_try * ncol(x_train))
+
+    set.seed(seed)                       # For reproducibility
     Forest <- randomForest::randomForest(x = x_train, y = y_train, ntree = n_tree, mtry = m_try, replace = TRUE, ...)
     y_pred <- confined(predict(Forest, x_test), lims)
 

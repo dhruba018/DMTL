@@ -80,7 +80,7 @@ DMTL <- function(target_set, source_set, use_density = FALSE, sample_size = 1e3,
     #                       lims = data_lims, rand_seed = seed)
     y2_cdf  <- estimate_cdf(y2, samples = sample_size, unit_range = TRUE, density = use_density, grids = 1e3, seed = random_seed)
 
-    y1_pred <- dist_match(y2_pred_map, ref = y1, src_dist = y2_cdf, density = use_density, samples = sample_size,
+    y1_pred <- dist_match(y2_pred_map, ref = y1, src_cdf = y2_cdf, density = use_density, samples = sample_size,
                           lims = data_lims, seed = random_seed)
 
     y1_pred <- confined(y1_pred, lims = data_lims);      names(y1_pred) <- names(y2_pred_map)

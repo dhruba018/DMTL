@@ -39,6 +39,7 @@ estimate_cdf <- function(x, bootstrap = TRUE, samples = 1e6, density = FALSE, bi
 
     ## Bootstrapping & data range...
     set.seed(seed)                              # For reproducibility
+
     xx   <- if (bootstrap) sample(x, size = samples, replace = TRUE) else x
     lims <- if (unit_range) c(0, 1) else range(x)
 
