@@ -8,6 +8,8 @@ DMTL(
   target_set,
   source_set,
   use_density = FALSE,
+  pred_model = "RF",
+  model_optimize = FALSE,
   sample_size = 1000,
   random_seed = NULL,
   all_pred = FALSE
@@ -15,16 +17,23 @@ DMTL(
 }
 \arguments{
 \item{target_set}{List containing the target datasets. A named list with
-components \code{X} (features) and \code{y} (response). The predictions are performed
+components \code{X} (predictors) and \code{y} (response). The predictions are performed
 to estimate the response values corresponding to \code{X} while \code{y} is only used
 to estimate the response distribution parameters.}
 
 \item{source_set}{List containing the source datasets. A named list with
-components \code{X} (features) and \code{y} (response). These two sets must be matched
+components \code{X} (predictors) and \code{y} (response). These two sets must be matched
 and used in both distribution estimation and predictive modeling.}
 
 \item{use_density}{Flag for using kernel density as distribution estimate
 instead of histogram counts. Defaults to \code{FALSE}.}
+
+\item{pred_model}{String to indicate the underlying predictive model. The
+available options are \code{RF}, \code{SVM}, and \code{EN}. Defaults to \code{RF}.}
+
+\item{model_optimize}{Flag for model parameter tuning. If \code{TRUE}, performs a
+grid search to optimize parameters and train with the resulting model.
+If \code{FALSE}, uses a set of predefined parameters. Defaults to \code{FALSE}.}
 
 \item{sample_size}{Sample size for estimating distributions of target and
 source datasets. Defaults to \code{1e3}.}
@@ -38,7 +47,7 @@ If \code{TRUE}, \code{DMTL()} returns a named list with two components- \code{ta
 Defaults to \code{FALSE}.}
 }
 \value{
-If \code{all_pred = FALSE}, a vector containing the final predictions.
+If \code{all_pred = FALSE}, a vector containing the final prediction values.
 
 If \code{all_pred = TRUE}, a named list with two components \code{target} and \code{source}
 \emph{i.e.}, predictions in the original target space and in source space,
@@ -66,6 +75,8 @@ used for both mapping and final prediction. In contrast, the datasets in
 \examples{
 
 }
+\keyword{density-matching}
 \keyword{distribution-matching}
 \keyword{domain-transfer}
+\keyword{histogram-matching}
 \keyword{transfer-learning}

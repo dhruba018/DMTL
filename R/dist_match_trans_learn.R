@@ -12,14 +12,19 @@
 #' response values) and a **matched** pair of source datasets.
 #'
 #' @param target_set List containing the target datasets. A named list with
-#' components `X` (features) and `y` (response). The predictions are performed
+#' components `X` (predictors) and `y` (response). The predictions are performed
 #' to estimate the response values corresponding to `X` while `y` is only used
 #' to estimate the response distribution parameters.
 #' @param source_set List containing the source datasets. A named list with
-#' components `X` (features) and `y` (response). These two sets must be matched
+#' components `X` (predictors) and `y` (response). These two sets must be matched
 #' and used in both distribution estimation and predictive modeling.
 #' @param use_density Flag for using kernel density as distribution estimate
 #' instead of histogram counts. Defaults to `FALSE`.
+#' @param pred_model String to indicate the underlying predictive model. The
+#' available options are `RF`, `SVM`, and `EN`. Defaults to `RF`.
+#' @param model_optimize Flag for model parameter tuning. If `TRUE`, performs a
+#' grid search to optimize parameters and train with the resulting model.
+#' If `FALSE`, uses a set of predefined parameters. Defaults to `FALSE`.
 #' @param sample_size Sample size for estimating distributions of target and
 #' source datasets. Defaults to `1e3`.
 #' @param random_seed Seed for random number generator (for reproducible
@@ -55,7 +60,8 @@
 ## Author: SR Dhruba, Dec 2020
 ################################################################################
 
-DMTL <- function(target_set, source_set, use_density = FALSE, sample_size = 1e3, random_seed = NULL, all_pred = FALSE) {
+DMTL <- function(target_set, source_set, use_density = FALSE, pred_model = "RF", model_optimize = FALSE,
+                 sample_size = 1e3, random_seed = NULL, all_pred = FALSE) {
 
     ## Initial check...
     if (ncol(target_set[["X"]]) != ncol(source_set[["X"]]))
@@ -85,8 +91,21 @@ DMTL <- function(target_set, source_set, use_density = FALSE, sample_size = 1e3,
 
 
     ## Perform prediction & map back to original space...
-    y2_pred_map <- RF_predict(x_train = X2, y_train = y2, x_test = X2_map, lims = data_lims,
-                              n_tree = 200, m_try = 0.4, seed = random_seed)
+    pred_model <- toupper(pred_model)
+    if (pred_model == "RF") {
+        y2_pred_map <- RF_predict(x_train = X2, y_train = y2, x_test = X2_map, lims = data_lims, optimize = model_optimize,
+                                  n_tree = 200, m_try = 0.4, seed = random_seed)
+    } else if (pred_model == "SVM") {
+        y2_pred_map <- SVM_predict(x_train = X2, y_train = y2, x_test = X2_map, lims = data_lims, optimize = model_optimize,
+                                   kernel = "rbf", C = 2, eps = 0.01, kpar = list(sigma = 0.1), seed = random_seed)
+    } else if (pred_model == "EN") {
+        y2_pred_map <- EN_predict(x_train = X2, y_train = y2, x_test = X2_map, lims = data_lims, optimize = model_optimize,
+                                  alpha = 0.8, seed = random_seed)
+    } else {
+        stop("Invalide model! Please check the documentation for the valid model options available.")
+    }
+    y2_pred_map <- as.vector(y2_pred_map);      names(y2_pred_map) <- rownames(X2_map)
+
     y2_cdf  <- estimate_cdf(y2, samples = sample_size, unit_range = TRUE, density = use_density, grids = 1e3, seed = random_seed)
 
     y1_pred <- dist_match(y2_pred_map, ref = y1, src_cdf = y2_cdf, density = use_density, samples = sample_size,
