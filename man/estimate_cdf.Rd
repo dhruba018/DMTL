@@ -45,6 +45,13 @@ Defaults to \code{NULL}.}
 
 \item{...}{Other options relevant for distribution estimation.}
 }
+\value{
+If \code{density = FALSE}, a function of class \code{ecdf}, inheriting from the
+\code{stepfun} class, and hence inheriting a \code{knots()} method.
+
+If \code{density = TRUE}, an object of class \code{kcde} which has the fields
+\code{eval.points} and \code{estimate} necessary for calculating a map.
+}
 \description{
 This function estimates the values of the cumulative distribution function
 (CDF) for a vector.
@@ -58,3 +65,7 @@ x_kde_cdf <- estimate_cdf(x, density = TRUE, unit_range = TRUE)
 \keyword{CDF}
 \keyword{KDE}
 \keyword{cumulative-distribution}
+\keyword{cumulative-histogram}
+\keyword{kernel-CDF}
+\keyword{kernel-density}
+\keyword{kernel-density-estimate}

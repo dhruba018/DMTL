@@ -2,43 +2,67 @@
 % Please edit documentation in R/dist_match_trans_learn.R
 \name{DMTL}
 \alias{DMTL}
-\title{Distribution Matching based Transfer Learning}
+\title{Distribution Mapping based Transfer Learning}
 \usage{
 DMTL(
   target_set,
   source_set,
   use_density = FALSE,
+  pred_model = "RF",
+  model_optimize = FALSE,
   sample_size = 1000,
   random_seed = NULL,
   all_pred = FALSE
 )
 }
 \arguments{
-\item{target_set}{List containing the target datasets. A named list with two
-components- \code{x} (features) and \code{y} (response). These two sets do not need to
-be matched and the response values are only used to estimate distribution
-while the corresponding response values for the features are predicted.}
+\item{target_set}{List containing the target datasets. A named list with
+components \code{X} (predictors) and \code{y} (response). The predictions are performed
+to estimate the response values corresponding to \code{X} while \code{y} is only used
+to estimate the response distribution parameters.}
 
-\item{source_set}{List containing the source datasets. A named list with two
-components- \code{x} (features) and \code{y} (response). These two sets must be matched
-and used in both distribution estimation and training a predictive model.}
+\item{source_set}{List containing the source datasets. A named list with
+components \code{X} (predictors) and \code{y} (response). These two sets must be matched
+and used in both distribution estimation and predictive modeling.}
 
 \item{use_density}{Flag for using kernel density as distribution estimate
 instead of histogram counts. Defaults to \code{FALSE}.}
 
+\item{pred_model}{String indicating the underlying predictive model. The
+currently available options are -
+\itemize{
+\item \code{RF} for random forest regression. If \code{model_optimize = FALSE}, builds a
+model with \code{n_tree = 200} and \code{m_try = 0.4}.
+\item \code{SVM} for support vector regression. If \code{model_optimize = FALSE}, builds a
+model with \code{kernel = "poly"}, \code{C = 2}, and \code{degree = 3}.
+\item \code{EN} for elastic net regression. If \code{model_optimize = FALSE}, builds a
+model with \code{alpha = 0.8} and \code{lambda} generated from a 5-fold cv.
+}}
+
+\item{model_optimize}{Flag for model parameter tuning. If \code{TRUE}, performs a
+grid search to optimize parameters and train with the resulting model.
+If \code{FALSE}, uses a set of predefined parameters. Defaults to \code{FALSE}.}
+
 \item{sample_size}{Sample size for estimating distributions of target and
-source datasets. Defaults to \code{1e3}.}
+source datasets. Defaults to \code{1000}.}
 
 \item{random_seed}{Seed for random number generator (for reproducible
 outcomes). Defaults to \code{NULL}.}
 
 \item{all_pred}{Flag for returning the prediction values in the source space.
-If \code{TRUE}, \code{DMTL()} returns a named list with two components- \code{target} and
-\code{source} (predictions in the target space and source space, respectively).
-Defaults to \code{FALSE}.}
+If \code{TRUE}, the function returns a named list with two components- \code{target}
+and \code{source} (predictions in the target space and source space,
+respectively). Defaults to \code{FALSE}.}
+}
+\value{
+If \code{all_pred = FALSE}, a vector containing the final prediction values.
+
+If \code{all_pred = TRUE}, a named list with two components \code{target} and \code{source}
+\emph{i.e.}, predictions in the original target space and in source space,
+respectively.
 }
 \description{
-This function performs distribution matching based transfer learning (DMTL)
+This function performs distribution mapping based transfer learning (DMTL)
 regression for given target (primary) and source (secondary) datasets. The
 data available in the source domain are used to design an appropriate
 predictive model. The target features with unknown response values are
@@ -49,9 +73,18 @@ the original target space by applying distribution matching again. Hence,
 this function needs an \strong{unmatched} pair of target datasets (features and
 response values) and a \strong{matched} pair of source datasets.
 }
+\note{
+The datasets in \code{target_set} (\emph{i.e.}, \code{X} and \code{y}) do not need to be
+matched (\emph{i.e.}, have the same number of rows) since the response values are
+used only to estimate distribution for mapping while the feature values are
+used for both mapping and final prediction. In contrast, the datasets in
+\code{source_set} (\emph{i.e.}, \code{X} and \code{y}) must have matched samples.
+}
 \examples{
 
 }
+\keyword{density-matching}
 \keyword{distribution-matching}
 \keyword{domain-transfer}
+\keyword{histogram-matching}
 \keyword{transfer-learning}

@@ -22,6 +22,16 @@ provided. If \code{TRUE}, \code{match_func()} returns a named list with two comp
 \code{mapped} and \code{func} (mapped knots for \code{new_vals} and the mapping function,
 respectively). Defaults to \code{FALSE}.}
 }
+\value{
+If \code{new_vals} is missing, a function performing interpolation
+(linear or constant) of the given data points.
+
+If \code{get_func = FALSE}, a vector containing the matched knots that will
+produce \code{new_vals} for the map \eqn{f}.
+
+If \code{get_func = TRUE}, a named list with two components- \code{mapped} and \code{func}
+(mapped knots for \code{new_vals} and the mapping function, respectively).
+}
 \description{
 This function estimates an inverse map \eqn{g} for a given set of knots
 (input) and values (output) corresponding to a certain map \eqn{f} \emph{i.e.},

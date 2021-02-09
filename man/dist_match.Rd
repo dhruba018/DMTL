@@ -7,8 +7,8 @@
 dist_match(
   src,
   ref,
-  src_dist,
-  ref_dist,
+  src_cdf,
+  ref_cdf,
   lims,
   density = FALSE,
   samples = 1e+06,
@@ -21,10 +21,10 @@ dist_match(
 \item{ref}{Vector containing the reference data to estimate the reference
 distribution for matching.}
 
-\item{src_dist}{Vector containing source distribution values. If missing,
+\item{src_cdf}{Vector containing source distribution values. If missing,
 these values are estimated from the source data using \code{estimate_cdf()}.}
 
-\item{ref_dist}{Vector containing reference distribution values. If missing,
+\item{ref_cdf}{Vector containing reference distribution values. If missing,
 these values are estimated from the reference data using \code{estimate_cdf()}.}
 
 \item{lims}{Vector providing the range of the knot values for mapping. If
@@ -33,11 +33,14 @@ missing, these values are estimated from the reference data.}
 \item{density}{Flag for using kernel density estimates for matching instead
 of histogram counts. Defaults to \code{False}.}
 
-\item{samples}{Sample size for estimating distributions if \code{src_dist} and/or
-\code{ref_dist} are missing. Defaults to \code{1e6}.}
+\item{samples}{Sample size for estimating distributions if \code{src_cdf} and/or
+\code{ref_cdf} are missing. Defaults to \code{1e6}.}
 
 \item{seed}{Seed for random number generator (for reproducible outcomes).
 Defaults to \code{NULL}.}
+}
+\value{
+A vector containing the matched values corresponding to \code{src}.
 }
 \description{
 This function matches a source distribution to a given reference distribution

@@ -22,15 +22,26 @@
 #' Defaults to `NULL`.
 #' @param ... Other options relevant for distribution estimation.
 #'
-#' @keywords cumulative-distribution CDF KDE
+#' @return
+#' If `density = FALSE`, a function of class `ecdf`, inheriting from the
+#' `stepfun` class, and hence inheriting a `knots()` method.
+#'
+#' If `density = TRUE`, an object of class `kcde` which has the fields
+#' `eval.points` and `estimate` necessary for calculating a map.
+#'
+#'
+#' @keywords cumulative-distribution CDF cumulative-histogram kernel-density
+#' kernel-density-estimate KDE kernel-CDF
 #' @export
 #' @examples
 #' x <- runif(100)
 #' x_hist_cdf <- estimate_cdf(x, samples = 1000, unit_range = TRUE)
 #' x_kde_cdf <- estimate_cdf(x, density = TRUE, unit_range = TRUE)
 #'
-##
+
 ## Dependency: stats, ks
+##
+## Author: SR Dhruba, Dec 2020
 ################################################################################
 
 estimate_cdf <- function(x, bootstrap = TRUE, samples = 1e6, density = FALSE, binned = TRUE, grids = 1e4,
