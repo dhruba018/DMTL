@@ -1,6 +1,6 @@
-#' Distribution Matching based Transfer Learning
+#' Distribution Mapping based Transfer Learning
 #'
-#' This function performs distribution matching based transfer learning (DMTL)
+#' This function performs distribution mapping based transfer learning (DMTL)
 #' regression for given target (primary) and source (secondary) datasets. The
 #' data available in the source domain are used to design an appropriate
 #' predictive model. The target features with unknown response values are
@@ -20,19 +20,25 @@
 #' and used in both distribution estimation and predictive modeling.
 #' @param use_density Flag for using kernel density as distribution estimate
 #' instead of histogram counts. Defaults to `FALSE`.
-#' @param pred_model String to indicate the underlying predictive model. The
-#' available options are `RF`, `SVM`, and `EN`. Defaults to `RF`.
+#' @param pred_model String indicating the underlying predictive model. The
+#' currently available options are -
+#' * `RF` for random forest regression. If `model_optimize = FALSE`, builds a
+#' model with `n_tree = 200` and `m_try = 0.4`.
+#' * `SVM` for support vector regression. If `model_optimize = FALSE`, builds a
+#' model with `kernel = "poly"`, `C = 2`, and `degree = 3`.
+#' * `EN` for elastic net regression. If `model_optimize = FALSE`, builds a
+#' model with `alpha = 0.8` and `lambda` generated from a 5-fold cv.
 #' @param model_optimize Flag for model parameter tuning. If `TRUE`, performs a
 #' grid search to optimize parameters and train with the resulting model.
 #' If `FALSE`, uses a set of predefined parameters. Defaults to `FALSE`.
 #' @param sample_size Sample size for estimating distributions of target and
-#' source datasets. Defaults to `1e3`.
+#' source datasets. Defaults to `1000`.
 #' @param random_seed Seed for random number generator (for reproducible
 #' outcomes). Defaults to `NULL`.
 #' @param all_pred Flag for returning the prediction values in the source space.
-#' If `TRUE`, `DMTL()` returns a named list with two components- `target` and
-#' `source` (predictions in the target space and source space, respectively).
-#' Defaults to `FALSE`.
+#' If `TRUE`, the function returns a named list with two components- `target`
+#' and `source` (predictions in the target space and source space,
+#' respectively). Defaults to `FALSE`.
 #'
 #' @return
 #' If `all_pred = FALSE`, a vector containing the final prediction values.
@@ -97,7 +103,7 @@ DMTL <- function(target_set, source_set, use_density = FALSE, pred_model = "RF",
                                   n_tree = 200, m_try = 0.4, seed = random_seed)
     } else if (pred_model == "SVM") {
         y2_pred_map <- SVM_predict(x_train = X2, y_train = y2, x_test = X2_map, lims = data_lims, optimize = model_optimize,
-                                   kernel = "rbf", C = 2, eps = 0.01, kpar = list(sigma = 0.1), seed = random_seed)
+                                   kernel = "poly", C = 2, eps = 0.01, kpar = list(degree = 3), seed = random_seed)
     } else if (pred_model == "EN") {
         y2_pred_map <- EN_predict(x_train = X2, y_train = y2, x_test = X2_map, lims = data_lims, optimize = model_optimize,
                                   alpha = 0.8, seed = random_seed)

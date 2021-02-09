@@ -45,13 +45,15 @@ Defaults to \code{FALSE}.}
 \value{
 If \code{x_test} is missing, the trained RF regressor.
 
-If \code{x_test} is provided, the predicted values using the model. Note that the
-response values are filtered to be bound by range in \code{lims}.
+If \code{x_test} is provided, the predicted values using the model.
 }
 \description{
 This function trains a Random Forest regressor using the training data
 provided and predict response for the test features. This implementation
 depends on the \code{randomForest} package.
+}
+\note{
+The response values are filtered to be bound by range in \code{lims}.
 }
 \keyword{decision-tree}
 \keyword{ensemble-model}

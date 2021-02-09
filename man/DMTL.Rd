@@ -2,7 +2,7 @@
 % Please edit documentation in R/dist_match_trans_learn.R
 \name{DMTL}
 \alias{DMTL}
-\title{Distribution Matching based Transfer Learning}
+\title{Distribution Mapping based Transfer Learning}
 \usage{
 DMTL(
   target_set,
@@ -28,23 +28,31 @@ and used in both distribution estimation and predictive modeling.}
 \item{use_density}{Flag for using kernel density as distribution estimate
 instead of histogram counts. Defaults to \code{FALSE}.}
 
-\item{pred_model}{String to indicate the underlying predictive model. The
-available options are \code{RF}, \code{SVM}, and \code{EN}. Defaults to \code{RF}.}
+\item{pred_model}{String indicating the underlying predictive model. The
+currently available options are -
+\itemize{
+\item \code{RF} for random forest regression. If \code{model_optimize = FALSE}, builds a
+model with \code{n_tree = 200} and \code{m_try = 0.4}.
+\item \code{SVM} for support vector regression. If \code{model_optimize = FALSE}, builds a
+model with \code{kernel = "poly"}, \code{C = 2}, and \code{degree = 3}.
+\item \code{EN} for elastic net regression. If \code{model_optimize = FALSE}, builds a
+model with \code{alpha = 0.8} and \code{lambda} generated from a 5-fold cv.
+}}
 
 \item{model_optimize}{Flag for model parameter tuning. If \code{TRUE}, performs a
 grid search to optimize parameters and train with the resulting model.
 If \code{FALSE}, uses a set of predefined parameters. Defaults to \code{FALSE}.}
 
 \item{sample_size}{Sample size for estimating distributions of target and
-source datasets. Defaults to \code{1e3}.}
+source datasets. Defaults to \code{1000}.}
 
 \item{random_seed}{Seed for random number generator (for reproducible
 outcomes). Defaults to \code{NULL}.}
 
 \item{all_pred}{Flag for returning the prediction values in the source space.
-If \code{TRUE}, \code{DMTL()} returns a named list with two components- \code{target} and
-\code{source} (predictions in the target space and source space, respectively).
-Defaults to \code{FALSE}.}
+If \code{TRUE}, the function returns a named list with two components- \code{target}
+and \code{source} (predictions in the target space and source space,
+respectively). Defaults to \code{FALSE}.}
 }
 \value{
 If \code{all_pred = FALSE}, a vector containing the final prediction values.
@@ -54,7 +62,7 @@ If \code{all_pred = TRUE}, a named list with two components \code{target} and \c
 respectively.
 }
 \description{
-This function performs distribution matching based transfer learning (DMTL)
+This function performs distribution mapping based transfer learning (DMTL)
 regression for given target (primary) and source (secondary) datasets. The
 data available in the source domain are used to design an appropriate
 predictive model. The target features with unknown response values are

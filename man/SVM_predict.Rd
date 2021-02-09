@@ -63,13 +63,15 @@ Defaults to \code{FALSE}.}
 \value{
 If \code{x_test} is missing, the trained SVM regressor.
 
-If \code{x_test} is provided, the predicted values using the model. Note that the
-response values are filtered to be bound by range in \code{lims}.
+If \code{x_test} is provided, the predicted values using the model.
 }
 \description{
 This function trains a Support Vector Machine regressor using the training
 data provided and predict response for the test features. This implementation
 depends on the \code{kernlab} package.
+}
+\note{
+The response values are filtered to be bound by range in \code{lims}.
 }
 \keyword{support-vector-machine}
 \keyword{support-vector-regression}

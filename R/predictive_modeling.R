@@ -45,8 +45,8 @@ tune_model <- function(x, y, model, tune_length = 30, search = "random", method 
 #' @return
 #' If `x_test` is missing, the trained RF regressor.
 #'
-#' If `x_test` is provided, the predicted values using the model. Note that the
-#' response values are filtered to be bound by range in `lims`.
+#' If `x_test` is provided, the predicted values using the model.
+#' @note The response values are filtered to be bound by range in `lims`.
 #'
 #' @keywords random-forest decision-tree ensemble-model
 #' @export
@@ -123,8 +123,8 @@ RF_predict <- function(x_train, y_train, x_test, lims, optimize = FALSE, n_tree 
 #' @return
 #' If `x_test` is missing, the trained SVM regressor.
 #'
-#' If `x_test` is provided, the predicted values using the model. Note that the
-#' response values are filtered to be bound by range in `lims`.
+#' If `x_test` is provided, the predicted values using the model.
+#' @note The response values are filtered to be bound by range in `lims`.
 #'
 #' @keywords support-vector-machine support-vector-regression
 #' @export
@@ -188,8 +188,8 @@ SVM_predict <- function(x_train, y_train, x_test, lims, kernel = "rbf", optimize
 #' @return
 #' If `x_test` is missing, the trained EN regressor.
 #'
-#' If `x_test` is provided, the predicted values using the model. Note that the
-#' response values are filtered to be bound by range in `lims`.
+#' If `x_test` is provided, the predicted values using the model.
+#' @note The response values are filtered to be bound by range in `lims`.
 #'
 #' @keywords elastic-net penalized-regression regularization
 #' @export
