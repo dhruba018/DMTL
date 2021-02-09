@@ -1,4 +1,4 @@
-## DMTL
+## `DMTL`
 
 **R package for Distribution Mapping based Transfer Learning**
 
