@@ -5,14 +5,11 @@
 ################################################################################
 tune_model <- function(x, y, model, tune_length = 30, search = "random", method = "cv", number = 10, verbose = FALSE, ...) {
     ## Initial check...
-    na_idx <- which(is.na(y))
-    if (length(na_idx) > 0) {
-        x <- x[-na_idx, ];      y <- y[-na_idx]
-    }
-    x <- as.matrix(x)
+    na_omit <- which(is.na(y))
+    x <- as.matrix(x[na_omit, ]);      y <- y[na_omit]
 
     ## Tune model...
-    params <- caret::trainControl(method = method, number = number, search = search, allowParallel = TRUE, verboseIter = verbose)
+    params <- caret::trainControl(method = method, number = number, search = search, allowParallel = FALSE, verboseIter = verbose)
     model <- caret::train(x, y, method = model, tuneLength = tune_length, trControl = params, preProc = NULL, ...)
     model
 }
