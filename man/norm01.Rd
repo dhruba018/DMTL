@@ -2,7 +2,7 @@
 % Please edit documentation in R/lambda_functions.R
 \name{norm01}
 \alias{norm01}
-\title{Normalize vector in \eqn{[0, 1]}}
+\title{Normalize vector in [0, 1]}
 \usage{
 norm01(x)
 }

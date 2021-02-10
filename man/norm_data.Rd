@@ -2,7 +2,7 @@
 % Please edit documentation in R/lambda_functions.R
 \name{norm_data}
 \alias{norm_data}
-\title{Normalize matrix per column in \eqn{[0, 1]}}
+\title{Normalize matrix per column in [0, 1]}
 \usage{
 norm_data(X)
 }
@@ -14,7 +14,7 @@ The normalized dataframe.
 }
 \description{
 This function normalizes each column of a dataframe or matrix (-alike)
-between \eqn{0} and \eqn{1}.
+between 0 and 1.
 }
 \examples{
 X <- matrix(rnorm(1000, 0.2, 0.3), nrow = 100)

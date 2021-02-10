@@ -5,7 +5,7 @@
 ################################################################################
 
 ## Normalization functions...
-#' Normalize vector in \eqn{[0, 1]}
+#' Normalize vector in \[0, 1\]
 #'
 #' This function normalizes a given vector between 0 and 1.
 #' @param x Vector containing data.
@@ -20,10 +20,10 @@
 norm01 <- function(x) (x - min(x)) / diff(range(x))
 
 
-#' Normalize matrix per column in \eqn{[0, 1]}
+#' Normalize matrix per column in \[0, 1\]
 #'
 #' This function normalizes each column of a dataframe or matrix (-alike)
-#' between \eqn{0} and \eqn{1}.
+#' between 0 and 1.
 #' @param X Dataframe or matrix (-alike) containing data.
 #' @return The normalized dataframe.
 #' @keywords normalization
