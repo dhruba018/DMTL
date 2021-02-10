@@ -50,6 +50,11 @@ F2 <- ecdf(x2)
 fval2 <- F2(x2)
 matched <- match_func(knots = x, vals = fval, new_vals = fval2)
 
+## Plot histograms...
+opar <- par(mfrow = c(1, 3))
+hist(x);    hist(x2);    hist(matched)
+par(opar)              # Reset par
+
 }
 \keyword{function-approximation}
 \keyword{inverse-map}

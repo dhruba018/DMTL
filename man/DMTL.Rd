@@ -12,7 +12,9 @@ DMTL(
   model_optimize = FALSE,
   sample_size = 1000,
   random_seed = NULL,
-  all_pred = FALSE
+  all_pred = FALSE,
+  get_verbose = FALSE,
+  allow_parallel = FALSE
 )
 }
 \arguments{
@@ -44,7 +46,7 @@ grid search to optimize parameters and train with the resulting model.
 If \code{FALSE}, uses a set of predefined parameters. Defaults to \code{FALSE}.}
 
 \item{sample_size}{Sample size for estimating distributions of target and
-source datasets. Defaults to \code{1000}.}
+source datasets. Defaults to \code{1e3}.}
 
 \item{random_seed}{Seed for random number generator (for reproducible
 outcomes). Defaults to \code{NULL}.}
@@ -53,6 +55,12 @@ outcomes). Defaults to \code{NULL}.}
 If \code{TRUE}, the function returns a named list with two components- \code{target}
 and \code{source} (predictions in the target space and source space,
 respectively). Defaults to \code{FALSE}.}
+
+\item{get_verbose}{Flag for displaying the progress when optimizing the
+predictive model \emph{i.e.}, \code{model_optimize = TRUE}. Defaults to \code{FALSE}.}
+
+\item{allow_parallel}{Flag for allowing parallel processing when performing
+grid search \emph{i.e.}, \code{model_optimimze = TRUE}. Defaults to \code{FALSE}.}
 }
 \value{
 If \code{all_pred = FALSE}, a vector containing the final prediction values.
@@ -74,13 +82,38 @@ this function needs an \strong{unmatched} pair of target datasets (features and
 response values) and a \strong{matched} pair of source datasets.
 }
 \note{
-The datasets in \code{target_set} (\emph{i.e.}, \code{X} and \code{y}) do not need to be
+\itemize{
+\item The datasets in \code{target_set} (\emph{i.e.}, \code{X} and \code{y}) do not need to be
 matched (\emph{i.e.}, have the same number of rows) since the response values are
 used only to estimate distribution for mapping while the feature values are
 used for both mapping and final prediction. In contrast, the datasets in
 \code{source_set} (\emph{i.e.}, \code{X} and \code{y}) must have matched samples.
+\item It is recommended to normalize the two response values (\code{y}) so that
+they will be in the same range. If normalization is not performed, \code{DMTL()}
+uses the range of target \code{y} values as the prediction range.
+}
 }
 \examples{
+set.seed(8644)
+
+## Generate two dataset with different underlying distributions...
+x1 <- matrix(rnorm(3000, 0.3, 0.6), ncol = 3)
+dimnames(x1) <- list(paste0("sample", 1:1000), paste0("f", 1:3))
+y1 <- 0.3*x1[, 1] + 0.1*x1[, 2] - x1[, 3] + rnorm(1000, 0, 0.05)
+x2 <- matrix(rnorm(3000, 0, 0.5), ncol = 3)
+dimnames(x2) <- list(paste0("sample", 1:1000), paste0("f", 1:3))
+y2 <- -0.2*x2[, 1] + 0.3*x2[, 2] - x2[, 3] + rnorm(1000, 0, 0.05)
+
+## Model datasets using DMTL & compare with a baseline model...
+library(DMTL)
+
+target <- list(X = x1, y = y1)
+source <- list(X = x2, y = y2)
+y1_pred <- DMTL(target_set = target, source_set = source, pred_model = "RF")
+y1_pred_bl <- RF_predict(x_train = x2, y_train = y2, x_test = x1)
+
+print(performance(y1, y1_pred, measures = c("MSE", "PCC")))
+print(performance(y1, y1_pred_bl, measures = c("MSE", "PCC")))
 
 }
 \keyword{density-matching}

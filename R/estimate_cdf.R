@@ -13,7 +13,7 @@
 #' @param binned Flag for calculating binned KDE. Defaults to `TRUE`. Ignored
 #' when `density = FALSE`.
 #' @param grids Size parameter for the estimation grid when `density = TRUE`.
-#' Used to calculate the grid sizes for KDE bandwidth estimation (`grids * 10`),
+#' Used to calculate the grid sizes for KDE bandwidth estimation (`grids*10`),
 #' and grid size KDE estimation (`bgridsize = grids` if `binned = TRUE` else
 #' `gridsize = grids/10`). Defaults to `1e4`.
 #' @param unit_range Flag for unity data range (_i.e._, data is normalized

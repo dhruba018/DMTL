@@ -50,6 +50,18 @@ tune_model <- function(x, y, model, tune_length = 30, search = "random", method 
 #'
 #' @keywords random-forest decision-tree ensemble-model
 #' @export
+#' @examples
+#' set.seed(86420)
+#' x <- matrix(rnorm(3000, 0.2, 1.2), ncol = 3);    colnames(x) <- paste0("x", 1:3)
+#' y <- 0.3*x[, 1] + 0.1*x[, 2] - x[, 3] + rnorm(1000, 0, 0.05)
+#'
+#' ## Get the model only...
+#' model <- RF_predict(x_train = x[1:800, ], y_train = y[1:800], n_tree = 300)
+#'
+#' ## Get predictive performance...
+#' y_pred <- RF_predict(x_train = x[1:800, ], y_train = y[1:800], x_test = x[801:1000, ])
+#' y_test <- y[801:1000]
+#' print(performance(y_test, y_pred, measures = "RSQ"))
 #'
 
 ## Dependency: stats, randomForest, caret
@@ -112,7 +124,7 @@ RF_predict <- function(x_train, y_train, x_test, lims, optimize = FALSE, n_tree 
 #' * `degree`, `scale`, `offset` for the polynomial kernel.
 #' * `scale`, `offset` for the hyperbolic tangent kernel.
 #'
-#' Valid only when `optimize = FALSE`.
+#' Valid only when `optimize = FALSE`. Defaults to `list(sigma = 0.1)`.
 #' @param eps The insensitive-loss function used for epsilon-SVR. Defaults to
 #' `0.01`.
 #' @param seed Seed for random number generator (for reproducible outcomes).
@@ -130,6 +142,18 @@ RF_predict <- function(x_train, y_train, x_test, lims, optimize = FALSE, n_tree 
 #'
 #' @keywords support-vector-machine support-vector-regression
 #' @export
+#' @examples
+#' set.seed(86420)
+#' x <- matrix(rnorm(3000, 0.2, 1.2), ncol = 3);    colnames(x) <- paste0("x", 1:3)
+#' y <- 0.3*x[, 1] + 0.1*x[, 2] - x[, 3] + rnorm(1000, 0, 0.05)
+#'
+#' ## Get the model only...
+#' model <- SVM_predict(x_train = x[1:800, ], y_train = y[1:800], kernel = "rbf")
+#'
+#' ## Get predictive performance...
+#' y_pred <- SVM_predict(x_train = x[1:800, ], y_train = y[1:800], x_test = x[801:1000, ])
+#' y_test <- y[801:1000]
+#' print(performance(y_test, y_pred, measures = "RSQ"))
 #'
 
 ## Dependency: stats, kernlab, caret
@@ -197,9 +221,21 @@ SVM_predict <- function(x_train, y_train, x_test, lims, kernel = "rbf", optimize
 #'
 #' @keywords elastic-net penalized-regression regularization
 #' @export
+#' @examples
+#' set.seed(86420)
+#' x <- matrix(rnorm(3000, 0.2, 1.2), ncol = 3);    colnames(x) <- paste0("x", 1:3)
+#' y <- 0.3*x[, 1] + 0.1*x[, 2] - x[, 3] + rnorm(1000, 0, 0.05)
+#'
+#' ## Get the model only...
+#' model <- EN_predict(x_train = x[1:800, ], y_train = y[1:800], alpha = 0.6)
+#'
+#' ## Get predictive performance...
+#' y_pred <- EN_predict(x_train = x[1:800, ], y_train = y[1:800], x_test = x[801:1000, ])
+#' y_test <- y[801:1000]
+#' print(performance(y_test, y_pred, measures = "RSQ"))
 #'
 
-## Dependency: stats, elasticnet, caret
+## Dependency: stats, glmnet, caret
 ## Dependency_own: lambda_functions
 ##
 ## Author: SR Dhruba, Feb 2021

@@ -33,7 +33,7 @@ Defaults to \code{FALSE}.}
 when \code{density = FALSE}.}
 
 \item{grids}{Size parameter for the estimation grid when \code{density = TRUE}.
-Used to calculate the grid sizes for KDE bandwidth estimation (\code{grids * 10}),
+Used to calculate the grid sizes for KDE bandwidth estimation (\code{grids*10}),
 and grid size KDE estimation (\code{bgridsize = grids} if \code{binned = TRUE} else
 \code{gridsize = grids/10}). Defaults to \code{1e4}.}
 
