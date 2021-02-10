@@ -53,6 +53,11 @@ x1 <- rnorm(100, 0.2, 0.6)
 x2 <- runif(200)
 matched <- dist_match(src = x1, ref = x2, lims = c(0, 1))
 
+## Plot histograms...
+opar <- par(mfrow = c(1, 3))
+hist(x1);    hist(x2);    hist(matched)
+par(opar)              # Reset par
+
 }
 \keyword{distribution-matching}
 \keyword{domain-transfer}

@@ -59,6 +59,20 @@ depends on the \code{randomForest} package.
 \note{
 The response values are filtered to be bound by range in \code{lims}.
 }
+\examples{
+set.seed(86420)
+x <- matrix(rnorm(3000, 0.2, 1.2), ncol = 3);    colnames(x) <- paste0("x", 1:3)
+y <- 0.3*x[, 1] + 0.1*x[, 2] - x[, 3] + rnorm(1000, 0, 0.05)
+
+## Get the model only...
+model <- RF_predict(x_train = x[1:800, ], y_train = y[1:800], n_tree = 300)
+
+## Get predictive performance...
+y_pred <- RF_predict(x_train = x[1:800, ], y_train = y[1:800], x_test = x[801:1000, ])
+y_test <- y[801:1000]
+print(performance(y_test, y_pred, measures = "RSQ"))
+
+}
 \keyword{decision-tree}
 \keyword{ensemble-model}
 \keyword{random-forest}

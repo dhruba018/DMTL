@@ -41,6 +41,11 @@
 #' fval2 <- F2(x2)
 #' matched <- match_func(knots = x, vals = fval, new_vals = fval2)
 #'
+#' ## Plot histograms...
+#' opar <- par(mfrow = c(1, 3))
+#' hist(x);    hist(x2);    hist(matched)
+#' par(opar)              # Reset par
+#'
 
 ## Dependency: stats, ks
 ## Dependency_own: lambda_functions
@@ -53,8 +58,7 @@
 match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
 
   ## Limits for function inputs...
-  if (missing(lims))
-    lims <- range(knots)
+  if (missing(lims)) {  lims <- range(knots)  }
 
   ## Inverse CDF mapping...
   map <- stats::approxfun(x = vals, y = knots, yleft = lims[1], yright = lims[2], method = "linear", ties = "ordered", rule = 2)
@@ -63,7 +67,7 @@ match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
     return( map )
 
   ## Matched values...
-  new_knots <- confined(map(new_vals), lims)
+  new_knots <- confined(map(new_vals), lims = lims)
 
   if (get_func)                 # Return function & mapped values
     return( list("mapped" = new_knots, "func" = map) )
@@ -105,6 +109,11 @@ match_func <- function(knots, vals, new_vals, lims, get_func = FALSE) {
 #' x2 <- runif(200)
 #' matched <- dist_match(src = x1, ref = x2, lims = c(0, 1))
 #'
+#' ## Plot histograms...
+#' opar <- par(mfrow = c(1, 3))
+#' hist(x1);    hist(x2);    hist(matched)
+#' par(opar)              # Reset par
+#'
 
 ## Dependency: stats, ks
 ## Dependency_own: lambda_functions, match_func
@@ -137,10 +146,8 @@ dist_match <- function(src, ref, src_cdf, ref_cdf, lims, density = FALSE, sample
 
 
   ## Perform mapping...
-  if (missing(lims))
-    lims <- range(ref)
-
-  matched <- match_func(knots = kn_vals, vals = fn_vals, new_vals = vals_to_match, lims)
+  if (missing(lims)) {  lims <- range(ref)  }
+  matched <- match_func(knots = kn_vals, vals = fn_vals, new_vals = vals_to_match, lims = lims)
   matched
 
 }
