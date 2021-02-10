@@ -17,6 +17,7 @@
 #' x_norm <- norm01(x)
 #' print(range(x_norm))
 #'
+################################################################################
 norm01 <- function(x) (x - min(x)) / diff(range(x))
 
 
@@ -33,6 +34,7 @@ norm01 <- function(x) (x - min(x)) / diff(range(x))
 #' X_norm <- norm_data(X)
 #' print(range(X_norm))
 #'
+################################################################################
 norm_data <- function(X) as.data.frame(apply(X, MARGIN = 2, FUN = norm01))
 
 
@@ -50,6 +52,7 @@ norm_data <- function(X) as.data.frame(apply(X, MARGIN = 2, FUN = norm01))
 #' print(apply(X_std, 2, mean))
 #' print(apply(X_std, 2, sd))
 #'
+################################################################################
 zscore <- function(X) as.data.frame(apply(X, MARGIN = 2, FUN = scale))
 
 
@@ -73,6 +76,7 @@ zscore <- function(X) as.data.frame(apply(X, MARGIN = 2, FUN = scale))
 #' x_filt <- confined(x, lims = c(-0.5, 0.5))
 #' print(range(x_filt))
 #'
+################################################################################
 confined <- function(x, lims = c(0, 1)) {
   x[x < lims[1]] <- lims[1];      x[x > lims[2]] <- lims[2]
   x
@@ -109,6 +113,7 @@ confined <- function(x, lims = c(0, 1)) {
 #' y_fit <- predict(lm(y ~ x))
 #' print(performance(y, y_fit, measures = c("MSE", "RSQ")))
 #'
+################################################################################
 performance <- function(y_obs, y_pred, measures = c("NRMSE", "NMAE", "PCC")) {
 
   ## Initialize results array...
