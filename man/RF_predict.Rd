@@ -13,7 +13,8 @@ RF_predict(
   n_tree = 300,
   m_try = 0.3333,
   seed = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  parallel = FALSE
 )
 }
 \arguments{
@@ -41,6 +42,9 @@ Defaults to \code{NULL}.}
 
 \item{verbose}{Flag for printing the tuning progress when \code{optimize = TRUE}.
 Defaults to \code{FALSE}.}
+
+\item{parallel}{Flag for allowing parallel processing when performing grid
+search \emph{i.e.}, \code{optimimze = TRUE}. Defaults to \code{FALSE}.}
 }
 \value{
 If \code{x_test} is missing, the trained RF regressor.

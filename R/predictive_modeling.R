@@ -3,13 +3,14 @@
 ##
 ## Author: SR Dhruba, Feb 2021
 ################################################################################
-tune_model <- function(x, y, model, tune_length = 30, search = "random", method = "cv", number = 10, verbose = FALSE, ...) {
+tune_model <- function(x, y, model, tune_length = 30, search = "random", method = "cv", number = 10,
+                       verbose = FALSE, parallel = FALSE, ...) {
     ## Initial check...
-    na_omit <- which(is.na(y))
+    na_omit <- which(!is.na(y))
     x <- as.matrix(x[na_omit, ]);      y <- y[na_omit]
 
     ## Tune model...
-    params <- caret::trainControl(method = method, number = number, search = search, allowParallel = FALSE, verboseIter = verbose)
+    params <- caret::trainControl(method = method, number = number, search = search, allowParallel = parallel, verboseIter = verbose)
     model <- caret::train(x, y, method = model, tuneLength = tune_length, trControl = params, preProc = NULL, ...)
     model
 }
@@ -38,6 +39,8 @@ tune_model <- function(x, y, model, tune_length = 30, search = "random", method 
 #' Defaults to `NULL`.
 #' @param verbose Flag for printing the tuning progress when `optimize = TRUE`.
 #' Defaults to `FALSE`.
+#' @param parallel Flag for allowing parallel processing when performing grid
+#' search _i.e._, `optimimze = TRUE`. Defaults to `FALSE`.
 #'
 #' @return
 #' If `x_test` is missing, the trained RF regressor.
@@ -56,13 +59,13 @@ tune_model <- function(x, y, model, tune_length = 30, search = "random", method 
 ################################################################################
 
 RF_predict <- function(x_train, y_train, x_test, lims, optimize = FALSE, n_tree = 300, m_try = 0.3333,
-                       seed = NULL, verbose = FALSE) {
+                       seed = NULL, verbose = FALSE, parallel = FALSE) {
 
     set.seed(seed)                          # For reproducibility
 
     ## Build model...
     if (optimize) {
-        Forest <- tune_model(x = x_train, y = y_train, model = "rf", verbose = verbose)
+        Forest <- tune_model(x = x_train, y = y_train, model = "rf", verbose = verbose, parallel = parallel)
     } else {
         if (m_try < 0 | m_try > 1)
             stop("Invalid value! Please choose a value between 0 and 1 (fraction of the features)!")
@@ -116,6 +119,8 @@ RF_predict <- function(x_train, y_train, x_test, lims, optimize = FALSE, n_tree 
 #' Defaults to `NULL`.
 #' @param verbose Flag for printing the tuning progress when `optimize = TRUE`.
 #' Defaults to `FALSE`.
+#' @param parallel Flag for allowing parallel processing when performing grid
+#' search _i.e._, `optimimze = TRUE`. Defaults to `FALSE`.
 #'
 #' @return
 #' If `x_test` is missing, the trained SVM regressor.
@@ -133,8 +138,8 @@ RF_predict <- function(x_train, y_train, x_test, lims, optimize = FALSE, n_tree 
 ## Author: SR Dhruba, Feb 2021
 ################################################################################
 
-SVM_predict <- function(x_train, y_train, x_test, lims, kernel = "rbf", optimize = FALSE, C = 2,
-                        kpar = list(sigma = 0.1), eps = 0.01, seed = NULL, verbose = FALSE) {
+SVM_predict <- function(x_train, y_train, x_test, lims, kernel = "rbf", optimize = FALSE, C = 2, kpar = list(sigma = 0.1),
+                        eps = 0.01, seed = NULL, verbose = FALSE, parallel = FALSE) {
 
     set.seed(seed)
 
@@ -142,7 +147,7 @@ SVM_predict <- function(x_train, y_train, x_test, lims, kernel = "rbf", optimize
     kernel <- tolower(kernel)
     if (optimize) {
         kern_func <- if (kernel == "linear") "svmLinear" else if (kernel == "poly") "svmPoly" else "svmRadial"
-        SVR <- tune_model(x = x_train, y = y_train, model = kern_func, verbose = verbose)
+        SVR <- tune_model(x = x_train, y = y_train, model = kern_func, verbose = verbose, parallel = parallel)
     } else {
         kern_func <- if (kernel == "linear") "vanilladot" else paste0(kernel, "dot")
         x_train <- as.matrix(x_train);      y_train <- as.matrix(y_train)
@@ -181,6 +186,8 @@ SVM_predict <- function(x_train, y_train, x_test, lims, kernel = "rbf", optimize
 #' Defaults to `NULL`.
 #' @param verbose Flag for printing the tuning progress when `optimize = TRUE`.
 #' Defaults to `FALSE`.
+#' @param parallel Flag for allowing parallel processing when performing grid
+#' search _i.e._, `optimimze = TRUE`. Defaults to `FALSE`.
 #'
 #' @return
 #' If `x_test` is missing, the trained EN regressor.
@@ -198,13 +205,14 @@ SVM_predict <- function(x_train, y_train, x_test, lims, kernel = "rbf", optimize
 ## Author: SR Dhruba, Feb 2021
 ################################################################################
 
-EN_predict <- function(x_train, y_train, x_test, lims, optimize = FALSE, alpha = 0.8, seed = NULL, verbose = FALSE) {
+EN_predict <- function(x_train, y_train, x_test, lims, optimize = FALSE, alpha = 0.8, seed = NULL,
+                       verbose = FALSE, parallel = FALSE) {
 
     set.seed(seed)
 
     ## Build model...
     if (optimize) {
-        EN <- tune_model(x = x_train, y = y_train, model = "glmnet", family = "gaussian", verbose = verbose)
+        EN <- tune_model(x = x_train, y = y_train, model = "glmnet", family = "gaussian", verbose = verbose, parallel = parallel)
         lambda <- EN$bestTune$lambda;       alpha <- EN$bestTune$alpha
     } else {
         EN <- glmnet::cv.glmnet(x = as.matrix(x_train), y = y_train, family = "gaussian", alpha = alpha,

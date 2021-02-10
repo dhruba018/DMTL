@@ -12,7 +12,8 @@ EN_predict(
   optimize = FALSE,
   alpha = 0.8,
   seed = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  parallel = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,9 @@ Defaults to \code{NULL}.}
 
 \item{verbose}{Flag for printing the tuning progress when \code{optimize = TRUE}.
 Defaults to \code{FALSE}.}
+
+\item{parallel}{Flag for allowing parallel processing when performing grid
+search \emph{i.e.}, \code{optimimze = TRUE}. Defaults to \code{FALSE}.}
 }
 \value{
 If \code{x_test} is missing, the trained EN regressor.
