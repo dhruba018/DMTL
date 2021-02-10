@@ -1,2 +1,3 @@
 ^DMTL\.Rproj$
 ^\.Rproj\.user$
+.travis.yml
