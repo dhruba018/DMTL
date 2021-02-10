@@ -1,7 +1,7 @@
 Package: DMTL
 Type: Package
 Title: Tools for performing Distribution Matching based Transfer Learning
-Version: 0.1.0.9000
+Version: 0.1.1.9000
 Authors@R: c( 
     person("Saugato Rahman", "Dhruba", role = c("aut", "cre"), email = "dhruba018@gmail.com", comment = c(ORCID = "0000-0001-5947-6757")), 
 	person("Ranadip", "Pal", role = "aut", email = "ranadip.pal@ttu.edu") 
