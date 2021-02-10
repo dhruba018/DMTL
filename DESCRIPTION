@@ -1,16 +1,25 @@
 Package: DMTL
 Type: Package
-Title: Tools for performing Distribution Matching based Transfer Learning
-Version: 0.1.1.9000
+Title: Tools for applying Distribution Mapping based Transfer Learning
+Version: 0.1.2.9000
 Authors@R: c( 
     person("Saugato Rahman", "Dhruba", role = c("aut", "cre"), email = "dhruba018@gmail.com", comment = c(ORCID = "0000-0001-5947-6757")), 
+	person("Omid", "Bazgir", role = "ctb"), 
+	person("Ruibo", "Zang", role = "ctb"), 
+	person("Souparno", "Ghosh", role = "ctb"), 
 	person("Ranadip", "Pal", role = "aut", email = "ranadip.pal@ttu.edu") 
 	)
-Description: Implementation of a transfer learning framework employing distribution matching based domain transfer. One can use the underlying sample distributions (histogram or density estimates) to generate a map between two distinct but related domains and transfer the target data to the source domain and utilize the available source data for better predictive modeling design. Suitable for the case where a one-to-one sample matching is not possible, thus one needs to transform the underlying data distribution to utilize the more availble data for modeling.
+Description: 
+	Implementation of a transfer learning framework employing distribution mapping based domain transfer. One can use the underlying sample distributions (histogram or kernel density estimates) to generate a map between two distinct but related domains and transfer the target data to the source domain and utilize the available source data for better predictive modeling design. Suitable for the case where a one-to-one sample matching is not possible, thus one needs to transform the underlying data distribution to utilize the more availble data for modeling.
 Encoding: UTF-8
 Depends: R (>= 3.6)
-Imports: stats, ks, randomForest, kernlab, glmnet, caret
-License: GPL (>=3)
+Imports: 
+	caret (>= 6.0-86), 
+	glmnet (>= 4.1), 
+	kernlab (>= 0.9-29), 
+	ks (>= 1.11.7), 
+	randomForest (>= 4.6-14)
+License: file LICENSE
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
