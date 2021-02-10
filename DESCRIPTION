@@ -5,7 +5,7 @@ Version: 0.1.2.9000
 Authors@R: c( 
     person("Saugato Rahman", "Dhruba", role = c("aut", "cre"), email = "dhruba018@gmail.com", comment = c(ORCID = "0000-0001-5947-6757")), 
 	person("Omid", "Bazgir", role = "ctb"), 
-	person("Ruibo", "Zang", role = "ctb"), 
+	person("Ruibo", "Zhang", role = "ctb"), 
 	person("Souparno", "Ghosh", role = "ctb"), 
 	person("Ranadip", "Pal", role = "aut", email = "ranadip.pal@ttu.edu") 
 	)
