@@ -1,4 +1,9 @@
-This is the first submission for this package. 
+## Resubmission
+This is a resubmission. In this version I have - 
+* Fixed the URL for devtools in README.md to the canonical format. 
+* Added some useful references in the Description field in the DESCRIPTION file. 
+* Added URL field in the DESCRIPTION file. 
+* Updated README.md with travis-CI check badge.
 
 ## Test environments
 * local Windows 10 Home, R 3.6.1
