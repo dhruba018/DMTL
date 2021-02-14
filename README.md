@@ -1,6 +1,8 @@
 ## `DMTL`
 
-**R package for Distribution Mapping based Transfer Learning**
+[![Build Status](https://www.travis-ci.com/dhruba018/DMTL.svg?branch=editing)](https://www.travis-ci.com/dhruba018/DMTL)
+
+DMTL is an R package for applying distribution mapping based transfer learning. DMTL employs the widely known idea of histogram matching and extend it to include distribution estimates like kernel density estimates. The typical use case would be if somebody wants to utilize data from multiple sources for similar kind of experiments in statistical modeling but there exists significant distribution shift between both predictors and response values. In this case, DMTL can alleviate this shift by generating a distribution matching based map and transfer the target data to the source domain to utilize the available source data for modeling using various predictive modeling techniques.  
 
 To install it on your local machine, you will need the `devtools` package which is [available](https://cran.r-project.org/web/packages/devtools/index.html) in CRAN. You can install it using the following command -  
 		
@@ -12,4 +14,3 @@ Once you have it, you need to use the following code chunk -
 		install_github("dhruba018/DMTL")  
 
 
-Currently under work...

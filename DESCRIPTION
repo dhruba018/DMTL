@@ -1,16 +1,16 @@
 Package: DMTL
 Type: Package
-Title: Tools for applying Distribution Mapping based Transfer Learning
+Title: Tools for Applying Distribution Mapping Based Transfer Learning
 Version: 0.1.2.9000
 Authors@R: c( 
     person("Saugato Rahman", "Dhruba", role = c("aut", "cre"), email = "dhruba018@gmail.com", comment = c(ORCID = "0000-0001-5947-6757")), 
 	person("Omid", "Bazgir", role = "ctb"), 
 	person("Ruibo", "Zhang", role = "ctb"), 
 	person("Souparno", "Ghosh", role = "ctb"), 
-	person("Ranadip", "Pal", role = "aut", email = "ranadip.pal@ttu.edu") 
+	person("Ranadip", "Pal", role = "aut") 
 	)
 Description: 
-	Implementation of a transfer learning framework employing distribution mapping based domain transfer. One can use the underlying sample distributions (histogram or kernel density estimates) to generate a map between two distinct but related domains and transfer the target data to the source domain and utilize the available source data for better predictive modeling design. Suitable for the case where a one-to-one sample matching is not possible, thus one needs to transform the underlying data distribution to utilize the more availble data for modeling.
+	Implementation of a transfer learning framework employing distribution mapping based domain transfer. One can use the underlying sample distributions (histogram or kernel density estimates) to generate a map between two distinct but related domains and transfer the target data to the source domain and utilize the available source data for better predictive modeling design. Suitable for the case where a one-to-one sample matching is not possible, thus one needs to transform the underlying data distribution to utilize the more available data for modeling.
 Encoding: UTF-8
 Depends: R (>= 3.6)
 Imports: 

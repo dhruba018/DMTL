@@ -27,7 +27,8 @@
 #' * `SVM` for support vector regression. If `model_optimize = FALSE`, builds a
 #' model with `kernel = "poly"`, `C = 2`, and `degree = 3`.
 #' * `EN` for elastic net regression. If `model_optimize = FALSE`, builds a
-#' model with `alpha = 0.8` and `lambda` generated from a 5-fold cv.
+#' model with `alpha = 0.8` and `lambda` generated from a 5-fold cross
+#' validation.
 #' @param model_optimize Flag for model parameter tuning. If `TRUE`, performs a
 #' grid search to optimize parameters and train with the resulting model.
 #' If `FALSE`, uses a set of predefined parameters. Defaults to `FALSE`.
