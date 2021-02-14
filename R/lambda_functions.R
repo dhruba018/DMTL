@@ -60,8 +60,8 @@ zscore <- function(X) as.data.frame(apply(X, MARGIN = 2, FUN = scale))
 #'
 #' This function filters a data vector using a given interval so that only the
 #' values falling inside the interval remains and any value that is less than
-#' the leftmost end gets replaced by that endvalue, and similarly, any value
-#' greater than the rightmost end gets replaced by that endvalue.
+#' the leftmost end gets replaced by that end-value, and similarly, any value
+#' greater than the rightmost end gets replaced by that end-value.
 #'
 #' @param x Vector containing data.
 #' @param lims Limit for the values. Values falling within this limit will pass

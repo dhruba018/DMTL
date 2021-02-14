@@ -2,4 +2,3 @@
 ^\.Rproj\.user$
 .travis.yml
 cran_comments.md
-README.md 

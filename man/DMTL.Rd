@@ -38,7 +38,8 @@ model with \code{n_tree = 200} and \code{m_try = 0.4}.
 \item \code{SVM} for support vector regression. If \code{model_optimize = FALSE}, builds a
 model with \code{kernel = "poly"}, \code{C = 2}, and \code{degree = 3}.
 \item \code{EN} for elastic net regression. If \code{model_optimize = FALSE}, builds a
-model with \code{alpha = 0.8} and \code{lambda} generated from a 5-fold cv.
+model with \code{alpha = 0.8} and \code{lambda} generated from a 5-fold cross
+validation.
 }}
 
 \item{model_optimize}{Flag for model parameter tuning. If \code{TRUE}, performs a
