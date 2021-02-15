@@ -1,9 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have - 
-* Fixed the URL for devtools in README.md to the canonical format. 
-* Added some useful references in the Description field in the DESCRIPTION file. 
-* Added URL field in the DESCRIPTION file. 
-* Updated README.md with travis-CI check badge.
+* Fixed the license to GPL-3
+* Fixed some DOIs / ISBNs in the DESCRIPTION file. 
 
 ## Test environments
 * local Windows 10 Home, R 3.6.1
