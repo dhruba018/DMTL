@@ -1,7 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have - 
-* Fixed the license to GPL-3
-* Fixed some DOIs / ISBNs in the DESCRIPTION file. 
+* Removed spaces after doi and isbn specifications
+* Updated the author list
 
 ## Test environments
 * local Windows 10 Home, R 3.6.1
